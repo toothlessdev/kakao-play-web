@@ -31,7 +31,7 @@ export class BaseComponent extends HTMLElement {
         const renderedNode = this.render(this.state);
 
         if (!(renderedNode instanceof Node)) {
-            throw new Error("render() 메서드는 html tagged template literal 또는 Node를 반환해야 합니다");
+            throw new Error("render() 메서드는 html tagged template literal 또는 Node를 반환해야 합니다. 현재 반환 값 타입: " + typeof renderedNode);
         }
 
         this.shadowRoot.innerHTML = "";
