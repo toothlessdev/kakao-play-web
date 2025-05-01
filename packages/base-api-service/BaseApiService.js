@@ -10,6 +10,7 @@ export class BaseApiService {
     /**
      * @param {String} baseUrl
      * @param {RequestInit} baseOptions
+     * @param {import("./RequestHandler.js").RequestHandler} requestHandler
      */
     constructor(baseUrl, baseOptions, requestHandler = new RequestHandler()) {
         if (BaseApiService.apiServiceInstance) return BaseApiService.apiServiceInstance;
