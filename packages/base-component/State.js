@@ -2,7 +2,7 @@ export class State {
     constructor(initialState = {}, onChange = () => {}) {
         return new Proxy(initialState, {
             set(target, key, value) {
-                if (target[key] !== value) {
+                if (JSON.stringify(target[key]) !== JSON.stringify(value)) {
                     target[key] = value;
                     onChange(key, value);
                 }
