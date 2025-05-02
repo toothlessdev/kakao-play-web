@@ -20,18 +20,20 @@ export class Counter extends BaseComponent {
 
     onEffect() {
         const $increaseBtn = this.shadowRoot.querySelector("#increase");
-        $increaseBtn.addEventListener("click", this.#increaseCount.bind(this));
+        this.handleIncrease = this.#increaseCount.bind(this);
+        $increaseBtn.addEventListener("click", this.handleIncrease);
 
         const $decreaseBtn = this.shadowRoot.querySelector("#decrease");
-        $decreaseBtn.addEventListener("click", this.#decreaseCount.bind(this));
+        this.handleDecrease = this.#decreaseCount.bind(this);
+        $decreaseBtn.addEventListener("click", this.handleDecrease);
     }
 
     onUnmount() {
         const $increaseBtn = this.shadowRoot.querySelector("#increase");
-        $increaseBtn.removeEventListener("click", this.#increaseCount.bind(this));
+        $increaseBtn.removeEventListener("click", this.handleIncrease);
 
         const $decreaseBtn = this.shadowRoot.querySelector("#decrease");
-        $decreaseBtn.removeEventListener("click", this.#decreaseCount.bind(this));
+        $decreaseBtn.removeEventListener("click", this.handleDecrease);
     }
 
     render() {
