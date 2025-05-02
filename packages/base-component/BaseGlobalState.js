@@ -30,7 +30,9 @@ export class BaseGlobalState {
         this.#subscribers.set(webComponentInstance, reRenderFunction);
     }
 
-    unsubscribe() {
-        this.#subscribers.delete(this);
+    unsubscribe(webComponentInstance) {
+        // #subscribers Map 에서 this 를 삭제하는경우, GlobalState 가 제거됨
+        // 실제 webComponentInstance 를 Map 에서 삭제해야함
+        this.#subscribers.delete(webComponentInstance);
     }
 }
