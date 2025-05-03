@@ -1,6 +1,10 @@
 import { State } from "./State.js";
 
 export class BaseComponent extends HTMLElement {
+    static get observedAttributes() {
+        return [];
+    }
+
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
@@ -15,6 +19,10 @@ export class BaseComponent extends HTMLElement {
 
     disconnectedCallback() {
         this.onUnmount();
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        this.reRender();
     }
 
     onBeforeMount() {}
