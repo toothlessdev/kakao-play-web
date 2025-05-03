@@ -8,6 +8,11 @@ export class App extends BaseComponent {
                 <nav-top></nav-top>
             </header>
 
+            <main>
+                <popular-movies></popular-movies>
+                <top-rated-movies></top-rated-movies>
+            </main>
+
             <footer></footer>
         `;
     }

@@ -18,7 +18,7 @@ export class NavTop extends BaseComponent {
                     justify-content: space-between;z
 
                     margin: 0;
-                    max-width: 1000px;
+                    max-width: 1200px;
                     height: 60px;
 
                     margin: 0 auto;
