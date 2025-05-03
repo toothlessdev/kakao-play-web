@@ -7,5 +7,5 @@ export function html(htmlStrings, ...values) {
     }, "");
 
     template.innerHTML = rawHTML;
-    return template.content;
+    return template.content.cloneNode(true);
 }
