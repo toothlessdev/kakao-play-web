@@ -22,6 +22,7 @@ export class BaseComponent extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue === newValue) return;
         this.reRender();
     }
 
