@@ -40,7 +40,6 @@ export class NavTop extends BaseComponent {
                     <li>
                         <movie-search-bar></movie-search-bar>
                     </li>
-                    ${html``}
                 </ul>
             </nav>
         `;
