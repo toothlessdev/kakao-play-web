@@ -22,6 +22,7 @@ export class PopularMovies extends BaseComponent {
         if (!response.ok) {
             this.state.isError = true;
             this.state.data = null;
+            return;
         }
         const data = await response.json();
         this.state.data = data.results;
