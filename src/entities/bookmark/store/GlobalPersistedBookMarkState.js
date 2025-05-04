@@ -7,8 +7,11 @@ export class GlobalPersistedBookMarkState extends BasePersistGlobalState {
         if (GlobalPersistedBookMarkState.instance) {
             return GlobalPersistedBookMarkState.instance;
         }
+
         super("movie-bookmarks", window.localStorage);
-        this.state.bookmarkedMovieIds = [];
+
+        if (!this.state) this.state.bookmarkedMovieIds = [];
+        this.onDispatch();
 
         GlobalPersistedBookMarkState.instance = this;
     }
