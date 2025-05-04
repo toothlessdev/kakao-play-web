@@ -167,3 +167,8 @@ const subscribers = new WeakMap();
 -   직접 구현하며 SPA의 동작 원리를 구조적으로 체험할 수 있었음
 -   상태 기반 렌더링, DOM 조작, 전역 상태 관리 등의 기초가 JS만으로도 가능함을 체감
 -   실제로 구현해보며 React, Vue 같은 프레임워크가 내부에서 어떤 원리로 동작하는지 체감할 수 있었음
+
+## ❓ 궁금한점 및 아쉬웠던 점
+
+-   싱글톤 vs 객체 생성 후 export 어떤 방법을 써야할까
+-   html tagged template literal 내부에 또다른 html tagged template literal 이 재귀적으로 들어가는 경우에 대해서 올바르게 처리하지 못함
