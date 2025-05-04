@@ -1,14 +1,10 @@
 import { BaseJsonStorageDataNotDeserializableException } from "./BaseJsonStorageServiceExceptions.js";
 
 export class BaseJsonStorageService {
-    static #storageKeySet = new Set();
-
     #storageKey = null;
     #localStorage = null;
 
     constructor(storageKey, localStorage = window.localStorage) {
-        BaseJsonStorageService.#storageKeySet.add(storageKey);
-
         this.#localStorage = localStorage;
         this.#storageKey = storageKey;
     }
@@ -48,6 +44,5 @@ export class BaseJsonStorageService {
 
     clear() {
         this.#localStorage.removeItem(this.#storageKey);
-        BaseJsonStorageService.#storageKeySet.delete(this.#storageKey);
     }
 }

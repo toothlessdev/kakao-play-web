@@ -6,11 +6,11 @@ export class BasePersistGlobalState extends BaseGlobalState {
      * @param {String} storageKey
      * @param {window.localStorage} localStorage
      */
-    constructor(storageKey, localStorage = window.localStorage) {
+    constructor(storageKey, initialState, localStorage = window.localStorage) {
         const jsonStorageService = new BaseJsonStorageService(storageKey, localStorage);
         const persisted = jsonStorageService.getData();
 
-        super(persisted || {});
+        super(persisted || initialState);
         this.jsonStorageService = jsonStorageService;
     }
 
