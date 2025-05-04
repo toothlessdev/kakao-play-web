@@ -1,23 +1,12 @@
-import { BaseJsonStorageDataNotDeserializableException, BaseJsonStorageServiceKeyAlreadyExistsException, BaseJsonStorageServiceKeyNotFoundException } from "./BaseJsonStorageServiceExceptions.js";
+import { BaseJsonStorageDataNotDeserializableException } from "./BaseJsonStorageServiceExceptions.js";
 
 export class BaseJsonStorageService {
     static #storageKeySet = new Set();
-    static #isExistingStorageKey(storageKey) {
-        if (BaseJsonStorageService.#storageKeySet.has(storageKey)) return true;
-        return false;
-    }
 
     #storageKey = null;
     #localStorage = null;
 
-    /**
-     * storageKey가 이미 존재하는 경우 예외 발생
-     * @param {String} storageKey
-     */
     constructor(storageKey, localStorage = window.localStorage) {
-        if (BaseJsonStorageService.#isExistingStorageKey(storageKey)) {
-            throw new BaseJsonStorageServiceKeyAlreadyExistsException(storageKey);
-        }
         BaseJsonStorageService.#storageKeySet.add(storageKey);
 
         this.#localStorage = localStorage;
