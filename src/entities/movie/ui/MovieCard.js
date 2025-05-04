@@ -1,5 +1,6 @@
 import { BaseComponent } from "../../../../packages/base-component/BaseComponent.js";
 import { html } from "../../../../packages/html-tagged-template-literal/HTMLTaggedTemplateLiteral.js";
+import { BookMarkService } from "../../bookmark/service/BookMarkService.js";
 import { GlobalModalState } from "../store/GlobalModalState.js";
 
 export class MovieCard extends BaseComponent {
@@ -9,8 +10,14 @@ export class MovieCard extends BaseComponent {
 
     constructor() {
         super();
+        this.bookMarkService = new BookMarkService();
         this.globalModalState = new GlobalModalState();
         this.eventAbortController = new AbortController();
+    }
+
+    #onBookMarkBtnClick(e) {
+        e.stopPropagation();
+        this.bookMarkService.toggleBookMark(this.getAttribute("movie-id"));
     }
 
     #onClick() {
@@ -18,13 +25,23 @@ export class MovieCard extends BaseComponent {
         this.globalModalState.state.movieId = this.getAttribute("movie-id");
     }
 
+    onAfterMount() {
+        this.bookMarkService.globalPersistedBookMarkState.subscribe(this, this.reRender.bind(this));
+    }
+
     onEffect() {
         this.shadowRoot.addEventListener("click", this.#onClick.bind(this), {
             signal: this.eventAbortController.signal,
         });
+        this.shadowRoot
+            .querySelector(".movie-card-bookmark")
+            .addEventListener("click", this.#onBookMarkBtnClick.bind(this), {
+                signal: this.eventAbortController.signal,
+            });
     }
 
     onUnmount() {
+        this.bookMarkService.globalPersistedBookMarkState.unsubscribe(this);
         this.eventAbortController.abort();
     }
 
@@ -110,11 +127,16 @@ export class MovieCard extends BaseComponent {
                     height: 30px;
                     background: none;
                 }
+                .movie-card-bookmark:hover {
+                    cursor: pointer;
+                }
             </style>
 
             <article class="movie-card-container">
                 <button class="movie-card-bookmark">
-                    <heart-icon active="false"></heart-icon>
+                    <heart-icon active="${this.bookMarkService.isBookMarked(
+                        this.getAttribute("movie-id")
+                    )}"></heart-icon>
                 </button>
                 <div class="movie-card-backdrop"></div>
                 <img src="https://image.tmdb.org/t/p/w300${this.getAttribute("img-src")}"></img>
