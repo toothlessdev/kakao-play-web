@@ -25,9 +25,7 @@ export class MovieCard extends BaseComponent {
     }
 
     onUnmount() {
-        this.shadowRoot.removeEventListener("click", this.#onClick.bind(this), {
-            signal: this.eventAbortController.signal,
-        });
+        this.eventAbortController.abort();
     }
 
     render() {
