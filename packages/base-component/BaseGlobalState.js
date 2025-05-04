@@ -1,41 +1,32 @@
 import { State } from "./State.js";
 
 export class BaseGlobalState {
-    static globalStateInstance = null;
+    static instances = new Map();
 
-    /** @type {Map<import("./BaseComponent.js").BaseComponent, Function>} */
-    #subscribers = null;
+    #subscribers = new Map();
 
     constructor(initialState = {}) {
-        if (BaseGlobalState.globalStateInstance) {
-            return BaseGlobalState.globalStateInstance;
+        const constructorName = this.constructor;
+        if (BaseGlobalState.instances.has(constructorName)) {
+            return BaseGlobalState.instances.get(constructorName);
         }
-        BaseGlobalState.globalStateInstance = this;
 
+        BaseGlobalState.instances.set(constructorName, this);
         this.state = new State(initialState, this.#dispatch.bind(this));
-        this.#subscribers = new Map();
     }
 
     #dispatch() {
-        this.#subscribers.forEach((reRenderFunction) => {
-            reRenderFunction();
-            this.onDispatch();
-        });
+        this.#subscribers.forEach((reRender) => reRender());
+        this.onDispatch();
     }
 
     onDispatch() {}
 
-    /**
-     * @param {import("./BaseComponent.js").BaseComponent} webComponentInstance
-     * @param {Function} reRenderFunction
-     */
-    subscribe(webComponentInstance, reRenderFunction) {
-        this.#subscribers.set(webComponentInstance, reRenderFunction);
+    subscribe(component, reRender) {
+        this.#subscribers.set(component, reRender);
     }
 
-    unsubscribe(webComponentInstance) {
-        // #subscribers Map 에서 this 를 삭제하는경우, GlobalState 가 제거됨
-        // 실제 webComponentInstance 를 Map 에서 삭제해야함
-        this.#subscribers.delete(webComponentInstance);
+    unsubscribe(component) {
+        this.#subscribers.delete(component);
     }
 }

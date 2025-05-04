@@ -8,8 +8,8 @@ export class BasePersistGlobalState extends BaseGlobalState {
      */
     constructor(storageKey, localStorage = window.localStorage) {
         const jsonStorageService = new BaseJsonStorageService(storageKey, localStorage);
-
         const persisted = jsonStorageService.getData();
+
         super(persisted || {});
         this.jsonStorageService = jsonStorageService;
     }
