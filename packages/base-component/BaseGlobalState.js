@@ -12,15 +12,18 @@ export class BaseGlobalState {
         }
         BaseGlobalState.globalStateInstance = this;
 
-        this.state = new State(initialState, this.dispatch.bind(this));
+        this.state = new State(initialState, this.#dispatch.bind(this));
         this.#subscribers = new Map();
     }
 
-    dispatch() {
+    #dispatch() {
         this.#subscribers.forEach((reRenderFunction) => {
             reRenderFunction();
+            this.onDispatch();
         });
     }
+
+    onDispatch() {}
 
     /**
      * @param {import("./BaseComponent.js").BaseComponent} webComponentInstance
