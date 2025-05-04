@@ -11,7 +11,9 @@ export class App extends BaseComponent {
             </header>
 
             <main>
-                <movie-search></movie-search>
+                <movie-search-bar></movie-search-bar>
+                <movie-search-result></movie-search-result>
+
                 <popular-movies></popular-movies>
                 <top-rated-movies></top-rated-movies>
             </main>
