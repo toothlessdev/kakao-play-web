@@ -37,9 +37,6 @@ export class NavTop extends BaseComponent {
             <nav>
                 <ul>
                     <li>Kakao Play</li>
-                    <li>
-                        <movie-search-bar></movie-search-bar>
-                    </li>
                 </ul>
             </nav>
         `;
