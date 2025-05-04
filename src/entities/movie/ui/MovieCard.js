@@ -1,5 +1,6 @@
 import { BaseComponent } from "../../../../packages/base-component/BaseComponent.js";
 import { html } from "../../../../packages/html-tagged-template-literal/HTMLTaggedTemplateLiteral.js";
+import { GlobalModalState } from "../store/GlobalModalState.js";
 
 export class MovieCard extends BaseComponent {
     static get observedAttributes() {
@@ -8,18 +9,23 @@ export class MovieCard extends BaseComponent {
 
     constructor() {
         super();
+        this.globalModalState = new GlobalModalState();
+        this.eventAbortController = new AbortController();
     }
 
     #onClick() {
-        console.log("click");
+        this.globalModalState.state.isOpen = true;
+        this.globalModalState.state.movieId = this.getAttribute("movie-id");
     }
 
     onEffect() {
-        this.shadowRoot.addEventListener("click", this.#onClick);
+        this.shadowRoot.addEventListener("click", this.#onClick.bind(this), {
+            signal: this.eventAbortController.signal,
+        });
     }
 
     onUnmount() {
-        this.shadowRoot.removeEventListener("click", this.#onClick);
+        this.eventAbortController.abort();
     }
 
     render() {
