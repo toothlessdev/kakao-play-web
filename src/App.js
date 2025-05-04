@@ -4,6 +4,8 @@ import { html } from "../packages/html-tagged-template-literal/HTMLTaggedTemplat
 export class App extends BaseComponent {
     render() {
         return html`
+            <movie-modal></movie-modal>
+
             <header>
                 <nav-top></nav-top>
             </header>
